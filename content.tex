@@ -1,3 +1,152 @@
 \section{Introduction}
 Dubai is a city located in the United Arab Emirates and is known for its fast growth and expansion.
 
+In this study the development of Dubai's infrastructure will analysed by using satellite images within the visible bands / spectrum.
+Since analysing infrastructure from space in the visible spectrum is a difficult topic, this report will focus on two different methods: first, an analysis of the captured colours, i.e. water and land, by using supervised classification (kNN algorithm) and second, a pattern and structure analysis using edge detection techniques and morphological filtering.
+
+To be able to analyse the actual development of structure, land and water evolution LandSat Data from since 1984 until 2016 will be used - one satellite image per year within the same or a close month, depending  on the cloud conditions.
+
+In particular, the following sections will cover the involved satellites and its instruments that are used to capture the images. Also, the images itself will be looked closer at, especially regarding resolution, image period etc. After, the aforementioned methods and the overall analysis approach will be explained in more detail. The results of this analysis will then  be discussed and a conclusion given, stating the findings and a future outlook on this particular topic of infrastructure development observation.
+
+\section{Satellite Instruments}
+Since this report covers a period of about 32 years, satellite imaginary from different satellite platforms will be used. To ensure a minimum compatibility between the images, e.g. regarding resolution etc., images from the same satellite family will be used - in particular LandSat satellites 4, 5, 7 and 8.
+The LandSat project is a joint program of the U.S. Geological Survey and (USGS) and NASA, with the first satellite launch in 1972.
+
+\footnote{https://pubs.er.usgs.gov/publication/fs20153081}
+Even though the resolution is only moderate, the LandSat satellites provide a continuous and global coverage - resulting in a vast amount of image data that reaches back around 4 decades. The data is made publicly available for free within the Landsat remote sensing (LRS) component of USGS in the EROS data centre.\footnote{https://remotesensing.usgs.gov/index.php}
+
+A first initial screening of the image data that is available from LandSat-1 to LandSat-3 revealed very quickly that those image data might not be very suitable for a proper analysis, since the very early LandSat satellites used Taperecorders to actually record images, so the retrieved resolution and image quality is not very much comparable to the later LandSat versions. Thus, LandSat-1 to LandSat-3 data is not used in the Analysis.
+
+Also, for the purpose of this study, only the visible spectral bands are used in the image data. However, for the sake of completeness, the following subsections give an overview of all available spectral bands in the respective instruments.
+
+\subsection{LandSat-4 and 5 Thematic Mapper}
+LandSat-4 was a project by NASA, NOAA, EOSAT and USGS and was launched on 16th July 1982 on a Delta 3920 rocket. The satellite weighted about 1942kg and used a Hydrazine propulsion system for its attitude control system. The Communication System used S, X, L and  Ku bands and had a data rate of about 85 Mbps on the downlink via the Tracking and Data Relay Satellite System (TDRSS). The satellite was launched in a sun-synchronous circular orbit with an inclination of 98.2° at a height of 705km.
+\footnote{https://landsat.usgs.gov/landsat-4-history}
+
+LandSat-4 and 5 were two identical satellites, with LandSat-5 being a backup satellite that outlived LandSat-4 and provided data until 2013.
+%\todo{en.wikipedia.org/wiki/Landsat_4 landsat.usgs.gov/landsat-5-history}
+
+Both satellites carried two observation instruments, the Multispectral Scanner (MSS) and the Thematic Mapper (TM) with the following available spectral bands:
+
+\begin{table}
+	\centering
+	\begin{tabular}{ | c | c | c | c |}
+	\hline
+	\textbf{No.} & \textbf{Band} & \textbf{$\lambda$} & \textbf{resolution} \\
+	\hline
+	Band 4 & Visible & 0.5 - 0.6 $\mu m$ & {57 x 79 m} \\
+	Band 5 & Visible & 0.6 - 0.7 $\mu m$ & {57 x 79 m} \\
+	Band 6 & Near IR & 0.7 - 0.8 $\mu m$ & {57 x 79 m} \\
+	Band 7 & Near IR & 0.8 - 1.1 $\mu m$ & {57 x 79 m} \\
+	\hline
+	\end{tabular}
+	\caption{MSS Instrument on Landsat 4 and 5}
+	\label{tab:L45MSS}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ | c | c | c | c |}
+	\hline
+	\textbf{No.} & \textbf{Band} & \textbf{$\lambda$} & \textbf{resolution} \\
+	\hline
+	Band 1 & Visible & 0.45 - 0.52 $\mu m$ & {30 m} \\
+	Band 2 & Visible & 0.52 - 0.60 $\mu m$ & {30 m} \\
+	Band 3 & Visible & 0.63 - 0.69 $\mu m$ & {30 m} \\
+	Band 4 & Near IR & 0.76 - 0.90 $\mu m$ & {30 m} \\
+	Band 5 & Near IR & 1.55 - 1.75 $\mu m$ & {30 m} \\
+	Band 6 & Thermal & 10.40 - 12.50 $\mu m$ & {30 m} \\
+	Band 7 & Mid IR & 2.08 - 2.35 $\mu m$ & {30 m} \\
+	\hline
+	\end{tabular}
+	\caption{TM Instrument on Landsat 4 and 5}
+	\label{tab:L45TM}
+\end{table}
+
+
+
+
+\subsection{LandSat-7 Enhanced Thematic Mapper Plus}
+LandSat-7, a successor to LandSat-4 and 5 since the launcher during the LandSat-6 launch failed, was launched on 15th April 1999 on a Delta II rocket. This satellite was heavier than its predecessors with about 2200kg and used a more sophisticated downlink method (Solid State Recorders or SSR's) to provide an improved downlink speed of 150Mbps.\\
+The satellite was launched the same sun-synchronous circular orbit as LandSat-4 with an inclination of 98.2° at a height of 705km, but with about 15 minutes behind LandSat-4. \footnote{https://landsat.usgs.gov/landsat-7-history}
+
+Another improvement was done on the Thematic Mapper, here called the Enhanced Thematic Mapper Plus (ETM+), with an increased amount of spectral bands and a panchromatic band with double the resolution compared to the other ones. \Cref{tab:L7ETM} shows a quick overview over the available spectral bands.
+
+\begin{table}
+	\centering
+	\begin{tabular}{ | c | c | c | c |}
+	\hline
+	\textbf{No.} & \textbf{Band} & \textbf{$\lambda$} & \textbf{resolution} \\
+	\hline
+	Band 1 & Visible & 0.45 - 0.52 $\mu m$ & {30 m} \\
+	Band 2 & Visible & 0.52 - 0.60 $\mu m$ & {30 m} \\
+	Band 3 & Visible & 0.63 - 0.69 $\mu m$ & {30 m} \\
+	Band 4 & Near IR & 0.76 - 0.90 $\mu m$ & {30 m} \\
+	Band 5 & Near IR & 1.55 - 1.75 $\mu m$ & {30 m} \\
+	Band 6 & Thermal & 10.40 - 12.50 $\mu m$ & {60 m Low \& High Gain} \\
+	Band 7 & Mid IR & 2.08 - 2.35 $\mu m$ & {30 m} \\
+	Band 8 & Panchromatic & 0.52 - 0.90 $\mu m$ & {15 m} \\
+	\hline
+	\end{tabular}
+	\caption{ETM+ Instrument on Landsat 7}
+	\label{tab:L7ETM}
+\end{table}
+
+
+\subsection{LandSat-8 Operational Land Imager}
+LandSat-8 was another iteration of the LandSat family and was launched on February 11, 2013 on an Atlas-V rocket. Again, this satellite was heaver compared to its predecessors with a weight of 2623kg. Contrary to LandSat-7, two distinct imaging instruments were used, the Operational Land Imager (OLI) and the Thermal Infrared Sensor (TIRS), where the OLI instruments was essentially the ETM+ with an additional detector to observe Cirrus clouds. The \cref{tab:L8OLI,tab:L8TIRS} show the appropriate spectral band properties for both instruments.
+
+\begin{table}
+	\centering
+	\begin{tabular}{ | c | c | c | c |}
+	\hline
+	\textbf{No.} & \textbf{Band} & \textbf{$\lambda$} & \textbf{resolution} \\
+	\hline
+	Band 1 & Visible & 0.43 - 0.45 $\mu m$ & {30 m} \\
+	Band 2 & Visible & 0.45 - 0.51 $\mu m$ & {30 m} \\
+	Band 3 & Visible & 0.53 - 0.59 $\mu m$ & {30 m} \\
+	Band 4 & Red & 0.64 - 0.67 $\mu m$ & {30 m} \\
+	Band 5 & Near IR & 0.85 - 0.88 $\mu m$ & {30 m} \\
+	Band 6 & SWIR 1 & 1.57 - 1.65  $\mu m$ & {30 m} \\
+	Band 7 & SWIR 2 & 2.11 - 2.29 $\mu m$ & {30 m} \\
+	Band 8 & Panchromatic & 0.52 - 0.90 $\mu m$ & {15 m} \\
+	Band 8 & Cirrus & 1.36 - 1.38 $\mu m$ & {30 m} \\
+	\hline
+	\end{tabular}
+	\caption{OLI Instrument on Landsat 8}
+	\label{tab:L8OLI}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ | c | c | c | c |}
+	\hline
+	\textbf{No.} & \textbf{Band} & \textbf{$\lambda$} & \textbf{resolution} \\
+	\hline
+	Band 10 & TIRS 1 & 10.6 - 11.19 $\mu m$ & {100 m} \\
+	Band 11 & TIRS 2 & 11.5 - 12.51 $\mu m$ & {100 m} \\
+	\hline
+	\end{tabular}
+	\caption{TIRS Instrument on Landsat 8}
+	\label{tab:L8TIRS}
+\end{table}
+
+
+\section{Satellite Imaginary and Observations}
+
+
+\section{Analysis Methods}
+
+\subsection{Preprocessing}
+
+\subsection{Structure Detection}
+
+\subsection{Colour Analysis}
+
+
+
+\section{Discussion}
+
+
+
+\section{Conclusion}
