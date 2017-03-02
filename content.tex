@@ -21,6 +21,7 @@ Also, for the purpose of this study, only the visible spectral bands are used in
 
 \subsection{LandSat-4 and 5 Thematic Mapper}
 LandSat-4 was a project by NASA, NOAA, EOSAT and USGS and was launched on 16th July 1982 on a Delta 3920 rocket. The satellite weighted about 1942kg and used a Hydrazine propulsion system for its attitude control system. The Communication System used S, X, L and  Ku bands and had a data rate of about 85 Mbps on the downlink via the Tracking and Data Relay Satellite System (TDRSS). The satellite was launched in a sun-synchronous circular orbit with an inclination of 98.2° at a height of 705km.
+
 \footnote{https://landsat.usgs.gov/landsat-4-history}
 
 LandSat-4 and 5 were two identical satellites, with LandSat-5 being a backup satellite that outlived LandSat-4 and provided data until 2013.
@@ -28,7 +29,7 @@ LandSat-4 and 5 were two identical satellites, with LandSat-5 being a backup sat
 
 Both satellites carried two observation instruments, the Multispectral Scanner (MSS) and the Thematic Mapper (TM) with the following available spectral bands:
 
-\begin{table}
+\begin{table} [h!]
 	\centering
 	\begin{tabular}{ | c | c | c | c |}
 	\hline
@@ -44,7 +45,7 @@ Both satellites carried two observation instruments, the Multispectral Scanner (
 	\label{tab:L45MSS}
 \end{table}
 
-\begin{table}
+\begin{table}[h!]
 	\centering
 	\begin{tabular}{ | c | c | c | c |}
 	\hline
@@ -72,7 +73,7 @@ The satellite was launched the same sun-synchronous circular orbit as LandSat-4 
 
 Another improvement was done on the Thematic Mapper, here called the Enhanced Thematic Mapper Plus (ETM+), with an increased amount of spectral bands and a panchromatic band with double the resolution compared to the other ones. \Cref{tab:L7ETM} shows a quick overview over the available spectral bands.
 
-\begin{table}
+\begin{table}[h!]
 	\centering
 	\begin{tabular}{ | c | c | c | c |}
 	\hline
@@ -96,7 +97,7 @@ Another improvement was done on the Thematic Mapper, here called the Enhanced Th
 \subsection{LandSat-8 Operational Land Imager}
 LandSat-8 was another iteration of the LandSat family and was launched on February 11, 2013 on an Atlas-V rocket. Again, this satellite was heaver compared to its predecessors with a weight of 2623kg. Contrary to LandSat-7, two distinct imaging instruments were used, the Operational Land Imager (OLI) and the Thermal Infrared Sensor (TIRS), where the OLI instruments was essentially the ETM+ with an additional detector to observe Cirrus clouds. The \cref{tab:L8OLI,tab:L8TIRS} show the appropriate spectral band properties for both instruments.
 
-\begin{table}
+\begin{table}[h!]
 	\centering
 	\begin{tabular}{ | c | c | c | c |}
 	\hline
@@ -117,7 +118,7 @@ LandSat-8 was another iteration of the LandSat family and was launched on Februa
 	\label{tab:L8OLI}
 \end{table}
 
-\begin{table}
+\begin{table}[h!]
 	\centering
 	\begin{tabular}{ | c | c | c | c |}
 	\hline
@@ -133,13 +134,160 @@ LandSat-8 was another iteration of the LandSat family and was launched on Februa
 
 
 \section{Satellite Imaginary and Observations}
+As explained in the previous chapter, imagery provided by different satellites and satellite instruments were used in this report. This chapter will give a short overview on the used image and their properties. All Images were selected and downloaded via the \textit{EarthExplorer}, a tool provided by the USGS to select earth observation data based on different criteria, such as coordinates (Degree/Minute/Second or WRS-2\footnote{World-Reference-System-2 for LandSat satellites consisting of two numbers, the Path and the Row of the satellite ground track}), different features in the images and data ranges.\\
+Also, different data sets provided by different programmes and satellites can be searched \footnote{https://earthexplorer.usgs.gov}.\\
 
+\subsection{LandSat-4 TM Imagery}
+
+\begin{table} [h!]
+	\centering
+	\begin{tabular}{| c | c | c | c | c |}
+	\hline
+	\textbf{Image Number} & \textbf{Resolution} & \textbf{Band} & \textbf{Capture Year} & \textbf{Location} \\ \hline
+	LT41600431988027XXX03.jpg & 30 m / pixel& Visible & 1988 & 160/043 (WRS-2) \\ \hline 
+	LT41600431990240XXX03.jpg & 30 m / pixel& Visible & 1990 & 160/043 (WRS-2) \\ \hline 
+	LT41600431992166XXX02.jpg & 30 m / pixel& Visible & 1992 & 160/043 (WRS-2) \\ \hline 
+	\end{tabular}
+\end{table}
+
+\subsection{LandSat-5 TM Imagery}
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{| c | c | c | c | c |}
+	\hline
+	\textbf{Image Number} & \textbf{Resolution} & \textbf{Band} & \textbf{Capture Year} & \textbf{Location} \\ \hline
+	LT51600431984136XXX12.jpg & 30 m / pixel& Visible & 1984 & 160/043 (WRS-2) \\ \hline 
+	LT51600431985042AAA04.jpg & 30 m / pixel& Visible & 1985 & 160/043 (WRS-2) \\ \hline 
+	LT51600431986045XXX05.jpg & 30 m / pixel& Visible & 1986 & 160/043 (WRS-2) \\ \hline 
+	LT51600431987272XXX10.jpg & 30 m / pixel& Visible & 1987 & 160/043 (WRS-2) \\ \hline 
+	LT51600431989165ISP00.jpg & 30 m / pixel& Visible & 1989 & 160/043 (WRS-2) \\ \hline 
+	LT51600431991171ISP00.jpg & 30 m / pixel& Visible & 1991 & 160/043 (WRS-2) \\ \hline 
+	LT51600431993160ISP00.jpg & 30 m / pixel& Visible & 1993 & 160/043 (WRS-2) \\ \hline 
+	LT51600431994179ISP00.jpg & 30 m / pixel& Visible & 1994 & 160/043 (WRS-2) \\ \hline 
+	LT51600431995278ISP00.jpg & 30 m / pixel& Visible & 1995 & 160/043 (WRS-2) \\ \hline 
+	LT51600431996345ISP00.jpg & 30 m / pixel& Visible & 1996 & 160/043 (WRS-2) \\ \hline 
+	LT51600431997011ISP00.jpg & 30 m / pixel& Visible & 1997 & 160/043 (WRS-2) \\ \hline 
+	LT51600431998286XXX01.jpg & 30 m / pixel& Visible & 1998 & 160/043 (WRS-2) \\ \hline 
+	LT51600432008138KHC01.jpg & 30 m / pixel& Visible & 2008 & 160/043 (WRS-2) \\ \hline 
+	\end{tabular}
+\end{table}
+
+For reasons unknown LandSat-5 acquired only very few data during the period of 1998 and 2008 - while researching this interesting data gap it could not be determined if this gap was due to problems or introduced on purpose. However, the MSS, the second instrument on board was powered off in 1999 and then powered back on in 2013, after the TM instrument failed \footnote{https://landsat.usgs.gov/landsat-5-history}.
+
+\subsection{LandSat-7 ETM+ Imagery}
+
+\begin{table} [h!]
+	\centering
+	\begin{tabular}{| c | c | c | c | c |}
+	\hline
+	\textbf{Image Number} & \textbf{Resolution} & \textbf{Band} & \textbf{Capture Year} & \textbf{Location} \\ \hline
+	LE71600431999265SGS01.jpg & 30 m / pixel& Visible & 1999 & 160/043 (WRS-2) \\ \hline 
+	LE71600432000188SGS00.jpg & 30 m / pixel& Visible & 2000 & 160/043 (WRS-2) \\ \hline 
+	LE71600432001190EDC00.jpg & 30 m / pixel& Visible & 2001 & 160/043 (WRS-2) \\ \hline 
+	LE71600432002273SGS01.jpg & 30 m / pixel& Visible & 2002 & 160/043 (WRS-2) \\ \hline 
+	LE71600432003148ASN00.jpg & 30 m / pixel& Visible & 2003 & 160/043 (WRS-2) \\ \hline 
+	\end{tabular}
+\end{table}
+
+In 2003 the Scan Line Correction (SLC) feature of the ETM+ instrument failed, which led to disturbed images due to the fact that the instrument did not correct the movement of the satellite in orbit while taking images. Due to the heavy image distortion in the area this report is actually focused on (coast of the Emirates, see upper left part of \cref{fig:L7SLCOFF}), this data is discarded for the use within this study, even though image data would be available up until the present day.\footnote{https://landsat.usgs.gov/landsat-7-history}
+
+
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/L7ETM_SLC-off_2003-present/LE71600432010279ASN00}
+	\caption{L-7 ETM+ SLC OFF (2010)}
+	\label{fig:L7SLCOFF}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/L7ETM_SLC-on_1999-2003/LE71600432003148ASN00.jpg}
+	\caption{L-7 ETM+ SLC ON (2003)}
+	\label{fig:L7SLCON}
+\end{minipage}
+\end{figure}
+
+\subsection{LandSat-8 OLI Imagery}
+Since the Images provided by LandSat-7 provided after 2003 were not usable, and LandSat-5 was decommissioned in 2013\footnote{https://landsat.usgs.gov/landsat-5-history}, the most recent data was selected from LandSat-8. This was done in particular since the resolution and image capture location and orientation is the same as in the previous pictures, even though for this time period newer and high-resolution satellite images would be available. This significantly decreases the effort for the analysis part of this report.
+
+\begin{table} [h!]
+	\centering
+	\begin{tabular}{| c | c | c | c | c |}
+	\hline
+	\textbf{Image Number} & \textbf{Resolution} & \textbf{Band} & \textbf{Capture Year} & \textbf{Location} \\ \hline
+	LC81600432013151LGN00.jpg & 30 m / pixel& Visible & 2013 & 160/043 (WRS-2) \\ \hline 
+	LC81600432014154LGN00.jpg & 30 m / pixel& Visible & 2014 & 160/043 (WRS-2) \\ \hline 
+	LC81600432015269LGN00.jpg & 30 m / pixel& Visible & 2015 & 160/043 (WRS-2) \\ \hline 
+	LC81600432016352LGN00.jpg & 30 m / pixel& Visible & 2016 & 160/043 (WRS-2) \\ \hline 
+	\end{tabular}
+\end{table}
 
 \section{Analysis Methods}
+After having obtained the relevant images as explained in the previous chapter, the image data had to be processed. For this report in particular, the focus was put on the analysis of the structure that is present in the region of interest (ROI) of the image. Under the assumption that a civilisation that is expanding in an area with enough free space available in the surrounding (as is the case in the quite desert-like area around Dubai), will build houses, roads and other periphery that is required to sustain a civilisation, the hypothesis for image analysis is as follows,\\
+\begin{quote}
+	\textbf{The more edges and/or junctions are detected the higher the development level of infrastructure.}
+\end{quote}
+
+Another assumption that can be made concerning infrastructure development is, that if a city grows, the natural flora and fauna is reduced. This leads to a second hypothesis that can be made.
+\begin{quote}
+	\textbf{The less water (sea, rivers, lakes) and vegetation is observed the higher the development level of infrastructure.}
+\end{quote}
+
+To prove these hypotheses, various methods and techniques have been used, as will be explained in the following sub-chapters.
 
 \subsection{Preprocessing}
+Since the data gathered from \textit{EarthExplorer} has already been preprocessed, i.e. assembled from different visible spectra, corrected w.r.t. north and watermarked, it needed some initial preprocessing. Also, since the images were not equal in pixel size and did not feature the Region-of-Interest in the same pixel area, a machine-based pre-processing was not feasible in the scope of this project. Thus, all images were edited using a mask of the current borders of Dubai, c.f. \cref{fig:borders}. This was done by masking the borders on the latest 2016-image of LandSat-8, which corresponds the best to the Google-Maps Image (note: \cref{fig:borders} contains Dubai City and Greater Dubai, for the purpose of this report Greater Dubai borders were used). Since, as mentioned, the image pixel sizes did not correspond and the ROI location varied, the mask was adjusted for every image manually using Photoshop (see e.g. \cref{fig:L8OLI_16} and the resulting image in \cref{fig:L8_OLI_16_masked}).
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{images/google_dubai.png}
+	\caption{Borders of Dubai marked in Red\protect\footnotemark}
+	\label{fig:borders}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/L8OLI_TIRS/LC81600432016352LGN00.jpg}
+	\caption{L-8 OLI Image (2016)}
+	\label{fig:L8OLI_16}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/L8OLI_TIRS/LC81600432016352LGN00.png}
+	\caption{L-8 OLI Image (2016) masked (ROI)}
+	\label{fig:L8_OLI_16_masked}
+\end{minipage}
+\end{figure}
+
+Having obtained the actual area/region of interest, the image was cropped to include as little overhead pixels as possible to reduce the image size and thus the processing. Also, cropping the image made it possible to equalise the size of images in terms of pixel width and height. This process is visualised between \cref{fig:L8_OLI_16_masked,fig:L8OLI_16_cropped}. The cropped images were now reduced to a size of 3201x3001 pixels, and the white background was converted to black for easier processing in later stages. \\
+During the screening of the images it was also very obvious, that the brightness and colours had significant variation between different pictures. This would vastly affect the analysis w.r.t. to the second hypothesis. This is the reason why the histogram of the images were equalised, so that the brightness and colour would match very well in between different images. It was possible to do so, since the images featured the exact same region of interest. The result of this histogram equalisation performed on \cref{fig:L8OLI_16_cropped} can be seen in \cref{fig:L8_OLI_16_equalised}.
+The cropping (selecting the ROI) and histogram equalisation was done automatically using Matlab, see \todo{include Matlab code}.
+
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped}
+	\caption{L-8 OLI Image (2016) cropped}
+	\label{fig:L8OLI_16_cropped}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
+	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\label{fig:L8_OLI_16_equalised}
+\end{minipage}
+\end{figure}
+
+
+\footnotetext{Image obtained from Google Maps on 02. March 2017, using the keyword "Dubai"}
 
 \subsection{Structure Detection}
+The now masked, cropped and equalised images were now 
 
 \subsection{Colour Analysis}
 
