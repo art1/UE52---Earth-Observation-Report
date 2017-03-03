@@ -238,7 +238,8 @@ Another assumption that can be made concerning infrastructure development is, th
 To prove these hypotheses, various methods and techniques have been used, as will be explained in the following sub-chapters.
 
 \subsection{Preprocessing}
-Since the data gathered from \textit{EarthExplorer} has already been preprocessed, i.e. assembled from different visible spectra, corrected w.r.t. north and watermarked, it needed some initial preprocessing. Also, since the images were not equal in pixel size and did not feature the Region-of-Interest in the same pixel area, a machine-based pre-processing was not feasible in the scope of this project. Thus, all images were edited using a mask of the current borders of Dubai, c.f. \cref{fig:borders}. This was done by masking the borders on the latest 2016-image of LandSat-8, which corresponds the best to the Google-Maps Image (note: \cref{fig:borders} contains Dubai City and Greater Dubai, for the purpose of this report Greater Dubai borders were used). Since, as mentioned, the image pixel sizes did not correspond and the ROI location varied, the mask was adjusted for every image manually using Photoshop (see e.g. \cref{fig:L8OLI_16} and the resulting image in \cref{fig:L8_OLI_16_masked}).
+\label{subsec:pre}
+Since the data gathered from \textit{EarthExplorer} has already been preprocessed, i.e. assembled from different visible spectra, corrected w.r.t. north and watermarked, it needed some initial preprocessing. Also, since the images were not equal in pixel size and did not feature the Region-of-Interest in the same pixel area, a machine-based pre-processing was not feasible in the scope of this project. Thus, all images were edited using a mask of the current borders of Dubai, c.f. \cref{fig:borders}. This was done by masking the borders on the latest 2016-image of LandSat-8, which corresponds the best to the Google-Maps Image (note: \cref{fig:borders} contains Dubai City and Greater Dubai, for the purpose of this report Greater Dubai borders were used). Since, as mentioned, the image sizes did not match and the ROI location varied, the mask was adjusted for every image manually using Photoshop (see e.g. \cref{fig:L8OLI_16}) by overlaying the border mask. As a result each image had a correctly masked Region-of-Interest. An example image is shown in \cref{fig:L8_OLI_16_masked}).
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{images/google_dubai.png}
@@ -262,8 +263,8 @@ Since the data gathered from \textit{EarthExplorer} has already been preprocesse
 \end{minipage}
 \end{figure}
 
-Having obtained the actual area/region of interest, the image was cropped to include as little overhead pixels as possible to reduce the image size and thus the processing. Also, cropping the image made it possible to equalise the size of images in terms of pixel width and height. This process is visualised between \cref{fig:L8_OLI_16_masked,fig:L8OLI_16_cropped}. The cropped images were now reduced to a size of 3201x3001 pixels, and the white background was converted to black for easier processing in later stages. \\
-During the screening of the images it was also very obvious, that the brightness and colours had significant variation between different pictures. This would vastly affect the analysis w.r.t. to the second hypothesis. This is the reason why the histogram of the images were equalised, so that the brightness and colour would match very well in between different images. It was possible to do so, since the images featured the exact same region of interest. The result of this histogram equalisation performed on \cref{fig:L8OLI_16_cropped} can be seen in \cref{fig:L8_OLI_16_equalised}.
+Having obtained the actual area/region of interest, the image was cropped to include as little overhead pixels as possible to reduce the image size and thus the processing time and effort. Also, cropping the image made it possible to equalise the size of images in terms of pixel width and height. This process is visualised between \cref{fig:L8_OLI_16_masked,fig:L8OLI_16_cropped}. The cropped images were now reduced to a size of 3201x3001 pixels, and the white background was converted to black for easier processing in later stages. \\
+During the screening of the images it was also very obvious, that the brightness and colours had significant variation between different pictures. This would vastly affect the analysis w.r.t. to the second hypothesis. This is the reason why the histograms of the images were equalised with the built-in MATLAB function \texttt{imhistmatch} , so that the brightness and colour would match very well in between different images. It was possible to do so, since the images featured the exact same region of interest. The result of this histogram equalisation performed on \cref{fig:L8OLI_16_cropped} can be seen in \cref{fig:L8_OLI_16_equalised}.
 The cropping (selecting the ROI) and histogram equalisation was done automatically using Matlab, see \todo{include Matlab code}.
 
 
@@ -287,14 +288,94 @@ The cropping (selecting the ROI) and histogram equalisation was done automatical
 \footnotetext{Image obtained from Google Maps on 02. March 2017, using the keyword "Dubai"}
 
 \subsection{Structure Detection}
-The now masked, cropped and equalised images were now 
+The now masked, cropped and equalised images could then be used for machine based processing. To prove or disprove the first hypotheses, the MATLAB built-in edge detection was used with some morphological filters. \\
+First, the images are grayscaled with the MATLAB function \texttt{rgb2gray} (\cref{fig:greyscale}), then an edge-detection was performed with \texttt{edge} on the grayscaled image (\cref{fig:edge_detect}). Looking at the image resulting from this step, it can be seen that also the borders at the masked area are detected, which is not desired because we are not interested in the mask border. To remove the outer detected edges, a morphologic erosion is performed with the parameter of 1 pixel (meaning only 1 pixel will be eroded) (\cref{fig:morpherode}). \\
+Since the edge detection only detected the edges, and not for example the inner part of a rectangle (assuming the rectangle being a house, or street), a morphological closing was performed to close those inner parts with a logical 1 (\cref{fig:morphclose}) (corresponding to the white colour in the binary images). Different edge detection algorithms were tested, e.g. Canny, but the build-in edge function provided the best results in terms of detecting the desired features (mostly streets/houses etc.). Also, the parameters for the morphological closing were chosen as \textit{Infinite}, since a complete closure of the \todo{eingeschlossenen} areas was desired.\\
+After having obtained the masked area corresponding to streets, houses and other structured elements, the area could be calculated by simply summing the binary image.
+
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+	\centering
+%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped}
+%	\caption{L-8 OLI Image (2016) cropped}
+	\label{fig:greyscale}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
+%	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\label{fig:edge_detect}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+	\centering
+%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped}
+%	\caption{L-8 OLI Image (2016) cropped}
+	\label{fig:morphclose}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
+%	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\label{fig:morpherode}
+\end{minipage}
+\end{figure}
 
 \subsection{Colour Analysis}
+To obtain images that support or do not support the second hypothesis, a colour analysis of the image was necessary. As explained in \cref{subsec:pre}, the histograms of each distinct image were equalised to have comparable images.\\
+The different image segments (e.g. vegetation, water, land) were then classified using supervised classification and the kNN-algorithm. For this, reference RGB values had to taken of the different desired classes to build a database for reference classes. This was done manually and the database then embedded in the MATLAB Code for the classification. For the purpose of this report only the results of the \textit{water}-class are used.
+The algorithm was then run on the masked, cropped and equalised images (\cref{fig:L8_OLI_16_equalised}). Two example results can be seen in \cref{fig:water_2016,fig:water_1984}.
 
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/water2016cropped_refd_w}
+	\caption{L-8 OLI Image (2016) water class}
+	\label{fig:water_2016}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/water1984cropped_refd_w}
+	\caption{L-5 TM Image (1984) water class}
+	\label{fig:water_1984}
+\end{minipage}
+\end{figure}
 
+The water area could then also be calculated by simply summing the binary image.
 
 \section{Discussion}
+After processing the image as explained in the previous chapter, the relative relation inbetween the pictures could be presented with the summed binary image data for both techniques. The result is shown in \cref{fig:analysstreet,fig:analyswater}. \\
+One can observe that there are quite high variations in some parts of the water analysis. This is due to failures or insufficient processing, e.g. Image 7 (1990) has a weird cutoff in the northern part, which results in a lower detection of water particles. Unfortunately, the exact reason for this could not be found.\\
+Also, the Images taken with LandSat-8 include some streets and other ground areas that are falsely classified as water by the kNN algorithm. A reason for this might be the histogram equalisation. As can be seen in \cref{fig:L8_OLI_16_equalised}, some of the streets appear blue/violet. It is not clear why exactly this happens - since it only occurs on the LandSat-8 data. A cause might be the "sharper" image of the LandSat-8 satellite, due to technology improvements and better satellite stabilisation.
+
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+	\centering
+%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped}
+%	\caption{L-8 OLI Image (2016) cropped}
+	\label{fig:analysstreet}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
+%	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\label{fig:analyswater}
+\end{minipage}
+\end{figure}
 
 
 
 \section{Conclusion}
+
+To conclude
+
+
+
