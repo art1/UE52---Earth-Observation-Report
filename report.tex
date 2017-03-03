@@ -9,7 +9,7 @@
 \usepackage{mathtools}
 \usepackage{mathtools,siunitx}
 \sisetup{detect-all}
-\usepackage{graphicx}
+\usepackage[draft]{graphicx}
 \graphicspath{{images/}}
 \usepackage{parskip}
 \usepackage{fancyhdr}
@@ -23,6 +23,7 @@
 \usepackage{caption}
 \usepackage{listings}
 \usepackage{dirtytalk}
+\usepackage{verbatim}
 \usepackage{cleveref}
 
 
@@ -117,6 +118,8 @@
 \include{content}
 
 % if appendix needed, uncomment the following lines
+\newpage
+\appendix
 \include{appendix}
 
 % if bibliography needed, uncomment the following lines
