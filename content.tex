@@ -13,7 +13,6 @@ Since this report covers a period of about 32 years, satellite imaginary from di
 The LandSat project is a joint program of the U.S. Geological Survey and (USGS) and NASA, with the first satellite launch in 1972 \citep{pub:usgs}, to provide continuous global earth observation data coverage .
 
 Even though the resolution is only moderate, the LandSat satellites provide a continuous and global coverage - resulting in a vast amount of image data that reaches back around 4 decades. The data is made publicly available for free within the Landsat remote sensing (LRS) component of USGS in the EROS data centre.\citep{remote:usgs}
-
 A first initial screening of the image data that is available from LandSat-1 to LandSat-3 revealed very quickly that those image data might not be very suitable for a proper analysis, since the very early LandSat satellites used Taperecorders to actually record images, so the retrieved resolution and image quality is not very much comparable to the later LandSat versions. Thus, LandSat-1 to LandSat-3 data is not used in the Analysis.
 
 Also, for the purpose of this study, only the visible spectral bands are used in the image data. However, for the sake of completeness, the following subsections give an overview of all available spectral bands in the respective instruments.
@@ -263,7 +262,7 @@ Since the data gathered from \textit{EarthExplorer} has already been preprocesse
 
 Having obtained the actual area/region of interest, the image was cropped to include as little overhead pixels as possible to reduce the image size and thus the processing time and effort. Also, cropping the image made it possible to equalise the size of images in terms of pixel width and height. This process is visualised between \cref{fig:L8_OLI_16_masked,fig:L8OLI_16_cropped}. The cropped images were now reduced to a size of 3201x3001 pixels, and the white background was converted to black for easier processing in later stages. \\
 During the screening of the images it was also very obvious, that the brightness and colours had significant variation between different pictures. This would vastly affect the analysis w.r.t. to the second hypothesis. This is the reason why the histograms of the images were equalised with the built-in MATLAB function \texttt{imhistmatch} , so that the brightness and colour would match very well in between different images. It was possible to do so, since the images featured the exact same region of interest. The result of this histogram equalisation performed on \cref{fig:L8OLI_16_cropped} can be seen in \cref{fig:L8_OLI_16_equalised}.
-The cropping (selecting the ROI) and histogram equalisation was done automatically using Matlab, see \todo{include Matlab code}.
+The cropping (selecting the ROI) and histogram equalisation was done automatically using Matlab, see \cref{Appendix A}.
 
 
 \begin{figure}[h!]
@@ -286,7 +285,7 @@ The cropping (selecting the ROI) and histogram equalisation was done automatical
 \subsection{Structure Detection}
 The now masked, cropped and equalised images could then be used for machine based processing. To prove or disprove the first hypotheses, the MATLAB built-in edge detection was used with some morphological filters. \\
 First, the images are grayscaled with the MATLAB function \texttt{rgb2gray} (\cref{fig:greyscale}), then an edge-detection was performed with \texttt{edge} on the grayscaled image (\cref{fig:edge_detect}). Looking at the image resulting from this step, it can be seen that also the borders at the masked area are detected, which is not desired because we are not interested in the mask border. To remove the outer detected edges, a morphologic erosion is performed with the parameter of 1 pixel (meaning only 1 pixel will be eroded) (\cref{fig:morpherode}). \\
-Since the edge detection only detected the edges, and not for example the inner part of a rectangle (assuming the rectangle being a house, or street), a morphological closing was performed to close those inner parts with a logical 1 (\cref{fig:morphclose}) (corresponding to the white colour in the binary images). Different edge detection algorithms were tested, e.g. Canny, but the build-in edge function provided the best results in terms of detecting the desired features (mostly streets/houses etc.). Also, the parameters for the morphological closing were chosen as \textit{Infinite}, since a complete closure of the \todo{eingeschlossenen} areas was desired.\\
+Since the edge detection only detected the edges, and not for example the inner part of a rectangle (assuming the rectangle being a house, or street), a morphological closing was performed to close those inner parts with a logical 1 (\cref{fig:morphclose}) (corresponding to the white colour in the binary images). Different edge detection algorithms were tested, e.g. Canny, but the build-in edge function provided the best results in terms of detecting the desired features (mostly streets/houses etc.). Also, the parameters for the morphological closing were chosen as \textit{Infinite}, since a complete closure of the inner areas was desired.\\
 After having obtained the masked area corresponding to streets, houses and other structured elements, the area could be calculated by simply summing the binary image.
 
 
@@ -294,13 +293,13 @@ After having obtained the masked area corresponding to streets, houses and other
 \centering
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_grayscale}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_grayscale}
 	\caption{L-8 OLI Image (2016) grayscaled}
 	\label{fig:greyscale}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_edge}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_edge}
 	\caption{L-8 OLI Image (2016) edge detection}
 	\label{fig:edge_detect}
 \end{minipage}
@@ -310,13 +309,13 @@ After having obtained the masked area corresponding to streets, houses and other
 \centering
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_close}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_close}
 	\caption{L-8 OLI Image (2016) morph. closing}
 	\label{fig:morphclose}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_erode}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_erode}
 	\caption{L-8 OLI Image (2016) eroded}
 	\label{fig:morpherode}
 \end{minipage}
@@ -352,29 +351,23 @@ Also, the Images taken with LandSat-8 include some streets and other ground area
 
 But also the analysis using the edge detection has some drawbacks.
 The edge detection of course detects edges regardless if it's e.g. a border between land and water or a street and water.
-\todo[inline]{do this shit!}
 
-However, plotting the trendline in the results (\cref{fig:analysstreet,fig:analyswater}) shows that the initial hypotheses can be confirmed, since the
+However, plotting the trendline in the results (\cref{fig:analysstreet,fig:analyswater}) shows that the initial hypotheses can be confirmed, since the trend line for the water detection decreases, thus the water abundance is lower in later years, and the structure, and thus street and house availability increases
 
-\todo[inline]{also do this shit!}
-
-
-Comparing this to officially available demographic data the analysis seems to be qualitatively correct
-
-\todo[inline]{download UN data!}
+Comparing this to officially available demographic data the analysis seems to be qualitatively correct, since the population has been growing since the 
 
 \begin{figure}[h!]
 \centering
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped}
-%	\caption{L-8 OLI Image (2016) cropped}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street_analysis}
+	\caption{street detection with trend line}
 	\label{fig:analysstreet}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
-%	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/water_analysis}
+	\caption{water detection with trend line}
 	\label{fig:analyswater}
 \end{minipage}
 \end{figure}
