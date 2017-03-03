@@ -10,7 +10,7 @@ In particular, the following sections will cover the involved satellites and its
 
 \section{Satellite Instruments}
 Since this report covers a period of about 32 years, satellite imaginary from different satellite platforms will be used. To ensure a minimum compatibility between the images, e.g. regarding resolution etc., images from the same satellite family will be used - in particular LandSat satellites 4, 5, 7 and 8.
-The LandSat project is a joint program of the U.S. Geological Survey and (USGS) and NASA, with the first satellite launch in 1972 \citep{pub:usgs}.
+The LandSat project is a joint program of the U.S. Geological Survey and (USGS) and NASA, with the first satellite launch in 1972 \citep{pub:usgs}, to provide continuous global earth observation data coverage .
 
 Even though the resolution is only moderate, the LandSat satellites provide a continuous and global coverage - resulting in a vast amount of image data that reaches back around 4 decades. The data is made publicly available for free within the Landsat remote sensing (LRS) component of USGS in the EROS data centre.\citep{remote:usgs}
 
@@ -294,14 +294,14 @@ After having obtained the masked area corresponding to streets, houses and other
 \centering
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped}
-%	\caption{L-8 OLI Image (2016) cropped}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_grayscale}
+	\caption{L-8 OLI Image (2016) grayscaled}
 	\label{fig:greyscale}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
-%	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_edge}
+	\caption{L-8 OLI Image (2016) edge detection}
 	\label{fig:edge_detect}
 \end{minipage}
 \end{figure}
@@ -310,14 +310,14 @@ After having obtained the masked area corresponding to streets, houses and other
 \centering
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped}
-%	\caption{L-8 OLI Image (2016) cropped}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_close}
+	\caption{L-8 OLI Image (2016) morph. closing}
 	\label{fig:morphclose}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
 	\centering
-%	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
-%	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\includegraphics[width=\textwidth-3em]{code/imagedata/analysis/street2016cropped_refd_erode}
+	\caption{L-8 OLI Image (2016) eroded}
 	\label{fig:morpherode}
 \end{minipage}
 \end{figure}
@@ -348,10 +348,10 @@ The water area could then also be calculated by simply summing the binary image.
 \section{Discussion}
 After processing the image as explained in the previous chapter, the relative relation inbetween the pictures could be presented with the summed binary image data for both techniques. The result is shown in \cref{fig:analysstreet,fig:analyswater}. \\
 One can observe that there are quite high variations in some parts of the water analysis. This is due to failures or insufficient processing, e.g. Image 7 (1990) has a weird cutoff in the northern part, which results in a lower detection of water particles. Unfortunately, the exact reason for this could not be found.\\
-Also, the Images taken with LandSat-8 include some streets and other ground areas that are falsely classified as water by the kNN algorithm. A reason for this might be the histogram equalisation. As can be seen in \cref{fig:L8_OLI_16_equalised}, some of the streets appear blue/violet. It is not clear why exactly this happens - since it only occurs on the LandSat-8 data. A cause might be the "sharper" image of the LandSat-8 satellite, due to technology improvements and better satellite stabilisation or the difference between the captured visible spectral bands, since the LandSat-8 OLI has a lower wavelength range compared to the others.
+Also, the Images taken with LandSat-8 include some streets and other ground areas that are falsely classified as water by the kNN algorithm. A reason for this might be the histogram equalisation. As can be seen in \cref{fig:L8_OLI_16_equalised}, some of the streets appear blue/violet. It is not clear why exactly this happens - since it only occurs on the LandSat-8 data. A cause might be the "sharper" image of the LandSat-8 satellite, due to technology improvements and better satellite stabilisation or the difference between the captured visible spectral bands, since the LandSat-8 OLI has a lower wavelength range compared to the others. This could lead to a different colour profile, and thus an incorrect histogram equalisation.
 
 But also the analysis using the edge detection has some drawbacks.
-
+The edge detection of course detects edges regardless if it's e.g. a border between land and water or a street and water.
 \todo[inline]{do this shit!}
 
 However, plotting the trendline in the results (\cref{fig:analysstreet,fig:analyswater}) shows that the initial hypotheses can be confirmed, since the
@@ -360,6 +360,8 @@ However, plotting the trendline in the results (\cref{fig:analysstreet,fig:analy
 
 
 Comparing this to officially available demographic data the analysis seems to be qualitatively correct
+
+\todo[inline]{download UN data!}
 
 \begin{figure}[h!]
 \centering
@@ -381,7 +383,43 @@ Comparing this to officially available demographic data the analysis seems to be
 
 \section{Conclusion}
 
-As stated in the introductory part of this report, Dubai is a very fast growing and expanding city, mainly due to its initially vast oil resources and thus its attraction and accumulation of wealth and wealthy people.
+As stated in the introductory part of this report, Dubai is a very fast growing and expanding city, mainly due to its initially vast oil resources and thus its attraction and accumulation of wealth and wealthy people.\\
+This was expected to lead to an increase in infrastructure development, due to the increasing population. Based on these assumptions, two hypotheses were made concerning the expected landscape change in satellite imagery.\\
+These hypotheses were examined using LandSat image data starting from the year 1984 until the year 2016. However, due to technical reasons, the limited scope of this report and the unavailability of data for unknown reasons there exist gaps in the data between 2003 to 2008 and 2008 to 2013.\\
+Finally, using two different approaches, the hypotheses could be qualitatively verified, thus an observation of Dubai's infrastructure using space-based imagery is feasible and possible with basic algorithmic approaches.
+
+However, since the used algorithmic approach is only basic it could be optimised by a lot, e.g. doing a better classification of water, land and streets and use a better approach for the edge detection than just apply morphological closing to detect the area.\\
+Also, in further work one could fill the data gaps with image data provided by other satellites. Another also promising approach would be to use an extended image histogram equalisation, since the spectral bands used to create the data differed throughout the used imagery. Further research should be done to show if there is an approach to account for this issue.\\
+For a more accurate result, one could also take into account the classification of vegetation and streets. A quick glance on the data (created during the kNN classification), showed that the vegetation and streets were classified quite accurate in some images. Still, for this report this data was not used, due to limited time and resources.\\
+It would also be interesting to create or use an approach that would allow automatic masking and cropping images (which was done manually for this report), for example using overlay-algorithms to detect the best mask fit between two images.
+
+To conclude, the overall approach to observe infrastructure development from space seemed feasible, even on a very basic level, thus it might be interesting to improve this approach by optimising the algorithms and fill the existing gaps in data with more satellite images in further work.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

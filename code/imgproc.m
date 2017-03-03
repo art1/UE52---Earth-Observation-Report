@@ -13,10 +13,7 @@ for i = 1 : length(srcfiles)
     BW1 = rgb2gray(X);
     % do some fancy edge detection (use the standard one! Canny produces not useful data!)
     BW2 = edge(BW1);
-    %plot one image to show the outline border problem
-    if i == 1
-        imshow(BW2);
-    end
+
     % do some morphological closing to get outlined area
     BW3 = bwmorph(BW2,'close',30);
     % erode the image to get rid of the border we don't want
@@ -24,6 +21,14 @@ for i = 1 : length(srcfiles)
     BWermask = BWer.*BW3;
     % close again, just to surely get the max area
     BWermask = bwmorph(BWermask,'close',Inf);
+    % plot one of each image from the last data set for the report
+    if i == length(srcfiles)
+        [pathstr,name,ext] = fileparts(filename);
+        imwrite(BW1,strcat('imagedata/analysis/street',name,'_grayscale',ext));
+        imwrite(BW2,strcat('imagedata/analysis/street',name,'_edge',ext));
+        imwrite(BW3,strcat('imagedata/analysis/street',name,'_close',ext));
+        imwrite(BWer,strcat('imagedata/analysis/street',name,'_erode',ext));
+    end
     % now reshape and count pixels
     [r col] = size(BWermask);
     BW_resh =reshape(BWermask,1,r*col);
