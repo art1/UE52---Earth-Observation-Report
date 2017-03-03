@@ -1,5 +1,5 @@
 \section{Introduction}
-Dubai is a city located in the United Arab Emirates and is known for its fast growth and expansion.
+Dubai is a city located in the United Arab Emirates near the Persian Gulf and is well known and acknowledged as a global city. Since oil was discovered in the late 1906's, Dubai started to expand very fast. However, nowadays only about 5\% of Dubai's revenue is connected to the black gold, but instead Dubai is known for financial services, tourism and aviation \citep{wiki:dubai}. Also, Dubai is known for having the world's tallest building, the Burj Khalifa and its extremely high living expenses. This leads to the question how, and in which way, Dubai has been expanding and growing since the late 1960's.
 
 In this study the development of Dubai's infrastructure will analysed by using satellite images within the visible bands / spectrum.
 Since analysing infrastructure from space in the visible spectrum is a difficult topic, this report will focus on two different methods: first, an analysis of the captured colours, i.e. water and land, by using supervised classification (kNN algorithm) and second, a pattern and structure analysis using edge detection techniques and morphological filtering.
@@ -10,21 +10,20 @@ In particular, the following sections will cover the involved satellites and its
 
 \section{Satellite Instruments}
 Since this report covers a period of about 32 years, satellite imaginary from different satellite platforms will be used. To ensure a minimum compatibility between the images, e.g. regarding resolution etc., images from the same satellite family will be used - in particular LandSat satellites 4, 5, 7 and 8.
-The LandSat project is a joint program of the U.S. Geological Survey and (USGS) and NASA, with the first satellite launch in 1972.
+The LandSat project is a joint program of the U.S. Geological Survey and (USGS) and NASA, with the first satellite launch in 1972 \citep{pub:usgs}.
 
-\footnote{https://pubs.er.usgs.gov/publication/fs20153081}
-Even though the resolution is only moderate, the LandSat satellites provide a continuous and global coverage - resulting in a vast amount of image data that reaches back around 4 decades. The data is made publicly available for free within the Landsat remote sensing (LRS) component of USGS in the EROS data centre.\footnote{https://remotesensing.usgs.gov/index.php}
+Even though the resolution is only moderate, the LandSat satellites provide a continuous and global coverage - resulting in a vast amount of image data that reaches back around 4 decades. The data is made publicly available for free within the Landsat remote sensing (LRS) component of USGS in the EROS data centre.\citep{remote:usgs}
 
 A first initial screening of the image data that is available from LandSat-1 to LandSat-3 revealed very quickly that those image data might not be very suitable for a proper analysis, since the very early LandSat satellites used Taperecorders to actually record images, so the retrieved resolution and image quality is not very much comparable to the later LandSat versions. Thus, LandSat-1 to LandSat-3 data is not used in the Analysis.
 
 Also, for the purpose of this study, only the visible spectral bands are used in the image data. However, for the sake of completeness, the following subsections give an overview of all available spectral bands in the respective instruments.
 
 \subsection{LandSat-4 and 5 Thematic Mapper}
-LandSat-4 was a project by NASA, NOAA, EOSAT and USGS and was launched on 16th July 1982 on a Delta 3920 rocket. The satellite weighted about 1942kg and used a Hydrazine propulsion system for its attitude control system. The Communication System used S, X, L and  Ku bands and had a data rate of about 85 Mbps on the downlink via the Tracking and Data Relay Satellite System (TDRSS). The satellite was launched in a sun-synchronous circular orbit with an inclination of 98.2° at a height of 705km.
+LandSat-4 was a project by NASA, NOAA, EOSAT and USGS and was launched on 16th July 1982 on a Delta 3920 rocket. The satellite weighted about 1942kg and used a Hydrazine propulsion system for its attitude control system. The Communication System used S, X, L and  Ku bands and had a data rate of about 85 Mbps on the downlink via the Tracking and Data Relay Satellite System (TDRSS). The satellite was launched in a sun-synchronous circular orbit with an inclination of 98.2° at a height of 705km \citep{l4:usgs}.
 
-\footnote{https://landsat.usgs.gov/landsat-4-history}
+%\footnote{https://landsat.usgs.gov/landsat-4-history}
 
-LandSat-4 and 5 were two identical satellites, with LandSat-5 being a backup satellite that outlived LandSat-4 and provided data until 2013.
+LandSat-4 and 5 were two identical satellites, with LandSat-5 being a backup satellite that outlived LandSat-4 and provided data until 2013 \citep{l5:wiki,l5:usgs}.
 %\todo{en.wikipedia.org/wiki/Landsat_4 landsat.usgs.gov/landsat-5-history}
 
 Both satellites carried two observation instruments, the Multispectral Scanner (MSS) and the Thematic Mapper (TM) with the following available spectral bands:
@@ -41,7 +40,7 @@ Both satellites carried two observation instruments, the Multispectral Scanner (
 	Band 7 & Near IR & 0.8 - 1.1 $\mu m$ & {57 x 79 m} \\
 	\hline
 	\end{tabular}
-	\caption{MSS Instrument on Landsat 4 and 5}
+	\caption{MSS Instrument on Landsat 4 and 5\citep{l4:usgs}\citep{l5:usgs}}
 	\label{tab:L45MSS}
 \end{table}
 
@@ -60,7 +59,7 @@ Both satellites carried two observation instruments, the Multispectral Scanner (
 	Band 7 & Mid IR & 2.08 - 2.35 $\mu m$ & {30 m} \\
 	\hline
 	\end{tabular}
-	\caption{TM Instrument on Landsat 4 and 5}
+	\caption{TM Instrument on Landsat 4 and 5\citep{l4:usgs,l5:usgs}}
 	\label{tab:L45TM}
 \end{table}
 
@@ -69,7 +68,7 @@ Both satellites carried two observation instruments, the Multispectral Scanner (
 
 \subsection{LandSat-7 Enhanced Thematic Mapper Plus}
 LandSat-7, a successor to LandSat-4 and 5 since the launcher during the LandSat-6 launch failed, was launched on 15th April 1999 on a Delta II rocket. This satellite was heavier than its predecessors with about 2200kg and used a more sophisticated downlink method (Solid State Recorders or SSR's) to provide an improved downlink speed of 150Mbps.\\
-The satellite was launched the same sun-synchronous circular orbit as LandSat-4 with an inclination of 98.2° at a height of 705km, but with about 15 minutes behind LandSat-4. \footnote{https://landsat.usgs.gov/landsat-7-history}
+The satellite was launched the same sun-synchronous circular orbit as LandSat-4 with an inclination of 98.2° at a height of 705km, but with about 15 minutes behind LandSat-4 \citep{l7:usgs}.
 
 Another improvement was done on the Thematic Mapper, here called the Enhanced Thematic Mapper Plus (ETM+), with an increased amount of spectral bands and a panchromatic band with double the resolution compared to the other ones. \Cref{tab:L7ETM} shows a quick overview over the available spectral bands.
 
@@ -89,13 +88,13 @@ Another improvement was done on the Thematic Mapper, here called the Enhanced Th
 	Band 8 & Panchromatic & 0.52 - 0.90 $\mu m$ & {15 m} \\
 	\hline
 	\end{tabular}
-	\caption{ETM+ Instrument on Landsat 7}
+	\caption{ETM+ Instrument on Landsat 7\citep{l7:usgs}}
 	\label{tab:L7ETM}
 \end{table}
 
 
 \subsection{LandSat-8 Operational Land Imager}
-LandSat-8 was another iteration of the LandSat family and was launched on February 11, 2013 on an Atlas-V rocket. Again, this satellite was heaver compared to its predecessors with a weight of 2623kg. Contrary to LandSat-7, two distinct imaging instruments were used, the Operational Land Imager (OLI) and the Thermal Infrared Sensor (TIRS), where the OLI instruments was essentially the ETM+ with an additional detector to observe Cirrus clouds. The \cref{tab:L8OLI,tab:L8TIRS} show the appropriate spectral band properties for both instruments.
+LandSat-8 was another iteration of the LandSat family and was launched on February 11, 2013 on an Atlas-V rocket. Again, this satellite was heaver compared to its predecessors with a weight of 2623kg. Contrary to LandSat-7, two distinct imaging instruments were used, the Operational Land Imager (OLI) and the Thermal Infrared Sensor (TIRS), where the OLI instruments was essentially the ETM+ with an additional detector to observe Cirrus clouds \citep{l7:usgs}. The \cref{tab:L8OLI,tab:L8TIRS} show the appropriate spectral band properties for both instruments.
 
 \begin{table}[h!]
 	\centering
@@ -114,7 +113,7 @@ LandSat-8 was another iteration of the LandSat family and was launched on Februa
 	Band 8 & Cirrus & 1.36 - 1.38 $\mu m$ & {30 m} \\
 	\hline
 	\end{tabular}
-	\caption{OLI Instrument on Landsat 8}
+	\caption{OLI Instrument on Landsat 8 \citep{l8:usgs}}
 	\label{tab:L8OLI}
 \end{table}
 
@@ -128,14 +127,14 @@ LandSat-8 was another iteration of the LandSat family and was launched on Februa
 	Band 11 & TIRS 2 & 11.5 - 12.51 $\mu m$ & {100 m} \\
 	\hline
 	\end{tabular}
-	\caption{TIRS Instrument on Landsat 8}
+	\caption{TIRS Instrument on Landsat 8 \citep{l8:usgs}}
 	\label{tab:L8TIRS}
 \end{table}
 
 
 \section{Satellite Imaginary and Observations}
 As explained in the previous chapter, imagery provided by different satellites and satellite instruments were used in this report. This chapter will give a short overview on the used image and their properties. All Images were selected and downloaded via the \textit{EarthExplorer}, a tool provided by the USGS to select earth observation data based on different criteria, such as coordinates (Degree/Minute/Second or WRS-2\footnote{World-Reference-System-2 for LandSat satellites consisting of two numbers, the Path and the Row of the satellite ground track}), different features in the images and data ranges.\\
-Also, different data sets provided by different programmes and satellites can be searched \footnote{https://earthexplorer.usgs.gov}.\\
+Also, different data sets provided by different programmes and satellites can be searched \citep{earthexpl}.\\
 
 \subsection{LandSat-4 TM Imagery}
 
@@ -172,7 +171,7 @@ Also, different data sets provided by different programmes and satellites can be
 	\end{tabular}
 \end{table}
 
-For reasons unknown LandSat-5 acquired only very few data during the period of 1998 and 2008 - while researching this interesting data gap it could not be determined if this gap was due to problems or introduced on purpose. However, the MSS, the second instrument on board was powered off in 1999 and then powered back on in 2013, after the TM instrument failed \footnote{https://landsat.usgs.gov/landsat-5-history}.
+For reasons unknown LandSat-5 acquired only very few data during the period of 1998 and 2008 - while researching this interesting data gap it could not be determined if this gap was due to problems or introduced on purpose. However, the MSS, the second instrument on board was powered off in 1999 and then powered back on in 2013, after the TM instrument failed \citep{l5:usgs}.
 
 \subsection{LandSat-7 ETM+ Imagery}
 
@@ -189,7 +188,7 @@ For reasons unknown LandSat-5 acquired only very few data during the period of 1
 	\end{tabular}
 \end{table}
 
-In 2003 the Scan Line Correction (SLC) feature of the ETM+ instrument failed, which led to disturbed images due to the fact that the instrument did not correct the movement of the satellite in orbit while taking images. Due to the heavy image distortion in the area this report is actually focused on (coast of the Emirates, see upper left part of \cref{fig:L7SLCOFF}), this data is discarded for the use within this study, even though image data would be available up until the present day.\footnote{https://landsat.usgs.gov/landsat-7-history}
+In 2003 the Scan Line Correction (SLC) feature of the ETM+ instrument failed, which led to disturbed images due to the fact that the instrument did not correct the movement of the satellite in orbit while taking images. Due to the heavy image distortion in the area this report is actually focused on (coast of the Emirates, see upper left part of \cref{fig:L7SLCOFF}), this data is discarded for the use within this study, even though image data would be available up until the present day \citep{l7:usgs}.
 
 
 
@@ -210,7 +209,7 @@ In 2003 the Scan Line Correction (SLC) feature of the ETM+ instrument failed, wh
 \end{figure}
 
 \subsection{LandSat-8 OLI Imagery}
-Since the Images provided by LandSat-7 provided after 2003 were not usable, and LandSat-5 was decommissioned in 2013\footnote{https://landsat.usgs.gov/landsat-5-history}, the most recent data was selected from LandSat-8. This was done in particular since the resolution and image capture location and orientation is the same as in the previous pictures, even though for this time period newer and high-resolution satellite images would be available. This significantly decreases the effort for the analysis part of this report.
+Since the Images provided by LandSat-7 provided after 2003 were not usable, and LandSat-5 was decommissioned in 2013 \citep{l5:usgs}, the most recent data was selected from LandSat-8. This was done in particular since the resolution and image capture location and orientation is the same as in the previous pictures, even though for this time period newer and high-resolution satellite images would be available. This significantly decreases the effort for the analysis part of this report.
 
 \begin{table} [h!]
 	\centering
@@ -243,10 +242,9 @@ Since the data gathered from \textit{EarthExplorer} has already been preprocesse
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{images/google_dubai.png}
-	\caption{Borders of Dubai marked in Red\protect\footnotemark}
+	\caption{Borders of Dubai marked in Red\citep{googlemaps}}
 	\label{fig:borders}
 \end{figure}
-
 \begin{figure}[h!]
 \centering
 \begin{minipage}{.5\textwidth}
@@ -279,13 +277,11 @@ The cropping (selecting the ROI) and histogram equalisation was done automatical
 \begin{minipage}{.5\textwidth}
 	\centering
 	\includegraphics[width=\textwidth-3em]{code/imagedata/alldata/2016cropped_refd}
-	\caption{L-8 OLI Image (2016) cropped and equalized}
+	\caption{L-8 OLI Image (2016) equalized}
 	\label{fig:L8_OLI_16_equalised}
 \end{minipage}
 \end{figure}
 
-
-\footnotetext{Image obtained from Google Maps on 02. March 2017, using the keyword "Dubai"}
 
 \subsection{Structure Detection}
 The now masked, cropped and equalised images could then be used for machine based processing. To prove or disprove the first hypotheses, the MATLAB built-in edge detection was used with some morphological filters. \\
@@ -352,8 +348,18 @@ The water area could then also be calculated by simply summing the binary image.
 \section{Discussion}
 After processing the image as explained in the previous chapter, the relative relation inbetween the pictures could be presented with the summed binary image data for both techniques. The result is shown in \cref{fig:analysstreet,fig:analyswater}. \\
 One can observe that there are quite high variations in some parts of the water analysis. This is due to failures or insufficient processing, e.g. Image 7 (1990) has a weird cutoff in the northern part, which results in a lower detection of water particles. Unfortunately, the exact reason for this could not be found.\\
-Also, the Images taken with LandSat-8 include some streets and other ground areas that are falsely classified as water by the kNN algorithm. A reason for this might be the histogram equalisation. As can be seen in \cref{fig:L8_OLI_16_equalised}, some of the streets appear blue/violet. It is not clear why exactly this happens - since it only occurs on the LandSat-8 data. A cause might be the "sharper" image of the LandSat-8 satellite, due to technology improvements and better satellite stabilisation.
+Also, the Images taken with LandSat-8 include some streets and other ground areas that are falsely classified as water by the kNN algorithm. A reason for this might be the histogram equalisation. As can be seen in \cref{fig:L8_OLI_16_equalised}, some of the streets appear blue/violet. It is not clear why exactly this happens - since it only occurs on the LandSat-8 data. A cause might be the "sharper" image of the LandSat-8 satellite, due to technology improvements and better satellite stabilisation or the difference between the captured visible spectral bands, since the LandSat-8 OLI has a lower wavelength range compared to the others.
 
+But also the analysis using the edge detection has some drawbacks.
+
+\todo[inline]{do this shit!}
+
+However, plotting the trendline in the results (\cref{fig:analysstreet,fig:analyswater}) shows that the initial hypotheses can be confirmed, since the
+
+\todo[inline]{also do this shit!}
+
+
+Comparing this to officially available demographic data the analysis seems to be qualitatively correct
 
 \begin{figure}[h!]
 \centering
@@ -375,7 +381,7 @@ Also, the Images taken with LandSat-8 include some streets and other ground area
 
 \section{Conclusion}
 
-To conclude
+As stated in the introductory part of this report, Dubai is a very fast growing and expanding city, mainly due to its initially vast oil resources and thus its attraction and accumulation of wealth and wealthy people.
 
 
 
